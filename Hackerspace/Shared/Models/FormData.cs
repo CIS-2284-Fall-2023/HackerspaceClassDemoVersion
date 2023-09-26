@@ -11,8 +11,16 @@ namespace Hackerspace.Shared.Models
         public string Text { get; set; }
         public bool IsSet { get; set; }
         public string TextArea { get; set; }
-        public string RadioGroupSelection { get; set; }
+        public string RadioGroup1Selection { get; set; }
+        public string RadioGroup2Selection { get; set; }
         public string DropDownSelection { get; set; }
         public DateTime DateTimeSelected { get; set; }
+
+        public override string ToString()
+        {
+            return $"Text: {Text}\n"
+                + $"Is Set: {IsSet}\n"
+                + $"TextArea: {TextArea}\n";
+        }
     }
 }

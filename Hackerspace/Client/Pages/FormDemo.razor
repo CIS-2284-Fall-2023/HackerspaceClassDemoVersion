@@ -1,36 +1,48 @@
 ﻿@page "/formdemo"
+@using Hackerspace.Shared.Models;
 
 <h3>FormDemo</h3>
-<p>Text: <InputText @bind-Value="text" /></p>
-<p>Checkbox: <InputCheckbox @bind-Value="isSet" /></p>
+<p>Text: <InputText @bind-Value="formData.Text" /></p>
+<p>Checkbox: <InputCheckbox @bind-Value="formData.IsSet" /></p>
 <p>
-    <InputRadioGroup Name="myRadioGroup1" @bind-Value="radioGroupSelection">
-        <p><InputRadio Name="myRadioGroup1" Value="option1" />Option 1</p>
-        <p><InputRadio Name="myRadioGroup1" Value="option2" />Option 2</p>
-        <p><InputRadio Name="myRadioGroup1" Value="option3" />Option 3</p>
+    <InputRadioGroup Name="myRadioGroup1" @bind-Value="formData.RadioGroup1Selection">
+        <p><InputRadio Name="myRadioGroup1" TValue="String" />Option 1</p>
+        <p><InputRadio Name="myRadioGroup1" TValue="String" />Option 2</p>
+        <p><InputRadio Name="myRadioGroup1" TValue="String" />Option 3</p>
     </InputRadioGroup>
 </p>
 <p>
 
 
-    <InputRadioGroup Name="myRadioGroup2" @bind-Value="radioGroupSelection">
-        <p><InputRadio Name="myRadioGroup2" Value="option1" />Option 1</p>
-        <p><InputRadio Name="myRadioGroup2" Value="option2" />Option 2</p>
-        <p><InputRadio Name="myRadioGroup2" Value="option3" />Option 3</p>
+    <InputRadioGroup Name="myRadioGroup2" @bind-Value="formData.RadioGroup2Selection">
+        <p><InputRadio Name="myRadioGroup2" TValue="String"/>Option 1</p>
+        <p><InputRadio Name="myRadioGroup2" TValue="String"/>Option 2</p>
+        <p><InputRadio Name="myRadioGroup2" TValue="String"/>Option 3</p>
     </InputRadioGroup>
 </p>
 <p>
-    <InputSelect @bind-Value="dropDownSelection">
+    <InputSelect @bind-Value="formData.DropDownSelection">
         <option value="1">Option 1</option>
         <option value="2">Option 2</option>
         <option value="3">Option 3</option>
     </InputSelect>
 </p>
 <p>
-    <InputDate @bind-Value="dateTime"></InputDate>
+    <InputDate @bind-Value="formData.DateTimeSelected"></InputDate>
 </p>
-<p>Text Area: <InputTextArea @bind-Value="textArea" /></p>
-<p></p>
+<p>Text Area: <InputTextArea @bind-Value="formData.TextArea" /></p>
+<p>
+    <button @onclick="Submit">Submit</button>
+</p>
+<p>
+    @results
+</p>
 @code {
-
+    private FormData formData = new FormData();
+    private string results;
+    private void Submit()
+    {
+        results = $"Clicked! {DateTime.Now.ToString("s")}\n"
+        +formData.ToString();
+    }
 }
