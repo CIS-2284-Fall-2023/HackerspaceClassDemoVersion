@@ -9,6 +9,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Hackerspace.Client", "Hacke
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Hackerspace.Shared", "Hackerspace\Shared\Hackerspace.Shared.csproj", "{5381B3FF-8C9E-4F8B-873C-005D1E2F37C2}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hackerspace.Shared.Tests", "Hackerspace.Shared.Tests\Hackerspace.Shared.Tests.csproj", "{7AF35F43-75B9-4C38-977F-5C525DBA1474}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{5381B3FF-8C9E-4F8B-873C-005D1E2F37C2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5381B3FF-8C9E-4F8B-873C-005D1E2F37C2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5381B3FF-8C9E-4F8B-873C-005D1E2F37C2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7AF35F43-75B9-4C38-977F-5C525DBA1474}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7AF35F43-75B9-4C38-977F-5C525DBA1474}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7AF35F43-75B9-4C38-977F-5C525DBA1474}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7AF35F43-75B9-4C38-977F-5C525DBA1474}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
