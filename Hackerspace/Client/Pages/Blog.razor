@@ -1,7 +1,26 @@
 ﻿@page "/blog"
+@inject HttpClient http;
 
 <h3>Blog</h3>
+@if(posts == null)
+{
+    <p>Loading...</p>
+}
+else
+{
+    @foreach(var post in posts)
+    {
+        <p>@post.Title</p>
+    }
+}
+
 
 @code {
+    private List<Post>? posts;
 
+    protected override async Task OnInitializedAsync()
+    {       
+        await base.OnInitializedAsync();
+        posts = await http.GetFromJsonAsync<List<Post>>("api/Posts");
+    }
 }
