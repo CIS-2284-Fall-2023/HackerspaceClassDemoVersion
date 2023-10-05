@@ -9,23 +9,23 @@ namespace Hackerspace.Server.Controllers
     [ApiController]
     public class PostsController : ControllerBase
     {
-        private readonly PostsRepoMock postsRepo;
+        private readonly PostsRepoMock _postsRepo;
 
-        public PostsController()
+        public PostsController(PostsRepoMock postsRepo)
         {
-                postsRepo = new PostsRepoMock();
+                _postsRepo = postsRepo;
         }
 
         [HttpGet]
         public List<Post> GetAllPosts()
         {
-            return postsRepo.GetAll();
+            return _postsRepo.GetAll();
         }
 
         [HttpPost] 
         public void InsertPost(Post post)
         {
-            postsRepo.InsertPost(post);
+            _postsRepo.InsertPost(post);
         }
     }
 }
