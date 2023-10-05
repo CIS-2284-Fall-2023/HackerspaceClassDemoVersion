@@ -1,5 +1,6 @@
 ﻿@page "/blog"
 @inject HttpClient http;
+@inject NavigationManager NavManager
 
 <h3>Blog</h3>
 @if(posts == null)
@@ -12,15 +13,24 @@ else
     {
         <p>@post.Title</p>
     }
+    <button type="button" class="btn btn-primary" @onclick="OnAddPostClick" >Add Post</button>
+    @message
 }
 
 
 @code {
     private List<Post>? posts;
+    private string message;
 
     protected override async Task OnInitializedAsync()
     {       
         await base.OnInitializedAsync();
         posts = await http.GetFromJsonAsync<List<Post>>("api/Posts");
+    }
+
+    protected void OnAddPostClick()
+    {
+        //Navigate to a detail page
+        NavManager.NavigateTo("post");
     }
 }
