@@ -21,5 +21,11 @@ namespace Hackerspace.Server.Controllers
         {
             return postsRepo.GetAll();
         }
+
+        [HttpPost] 
+        public void InsertPost(Post post)
+        {
+            postsRepo.InsertPost(post);
+        }
     }
 }
