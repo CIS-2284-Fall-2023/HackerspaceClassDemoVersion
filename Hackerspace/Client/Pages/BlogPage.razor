@@ -9,13 +9,18 @@
 }
 else
 {
+    <p>
+
+        <button type="button" class="btn btn-primary" @onclick="OnPreviousPageClickAsync"><span class="oi oi-"></span>Previous Page</button>
+        <button type="button" class="btn btn-primary" @onclick="OnNextPageClickAsync">Next Page</button>
+    </p>
     @foreach(var post in posts)
     {
         <p>@post.Title</p>
     }
-    <button type="button" class="btn btn-primary" @onclick="OnNextPageClickAsync">Next Page</button>
-    <button type="button" class="btn btn-primary" @onclick="OnPreviousPageClickAsync">Previous Page</button>
-    <button type="button" class="btn btn-primary" @onclick="OnAddPostClick" >Add Post</button>
+    <p>
+        <button type="button" class="btn btn-primary" @onclick="OnAddPostClick">Add Post</button>
+    </p>
 }
 
 

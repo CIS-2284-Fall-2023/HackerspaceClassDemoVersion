@@ -38,7 +38,7 @@ namespace Hackerspace.Server.Mocks
         /// <returns>A IEnumerable of Post with pageSize posts in it.</returns>
         public IEnumerable<Post> GetPosts(int page, int pageSize)
         {
-            return posts.OrderBy(p=>p.Date).Skip((page-1)*pageSize).Take(pageSize);
+            return posts.OrderByDescending(p=>p.Date).Skip((page-1)*pageSize).Take(pageSize);
         }
 
         /// <summary>

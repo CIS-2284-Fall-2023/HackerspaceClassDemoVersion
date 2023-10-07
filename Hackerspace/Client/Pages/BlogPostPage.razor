@@ -29,9 +29,15 @@
 
 
 @code {
-    private Post post = new Post();
+    private Post post;
     private string HideAlert { get; set; } = "d-none";
     private string AlertContent { get; set; } = "This is a primary alert—check it out!";
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+        post = new Post();
+        post.Date = DateTime.Now;
+    }
     protected async Task OnSubmitClickedAsync()
     {
         var result = await http.PostAsJsonAsync<Post>("api/Posts/", post);
