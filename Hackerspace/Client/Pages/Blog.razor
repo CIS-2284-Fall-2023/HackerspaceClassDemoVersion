@@ -13,19 +13,40 @@ else
     {
         <p>@post.Title</p>
     }
+    <button type="button" class="btn btn-primary" @onclick="OnNextPageClickAsync">Next Page</button>
+    <button type="button" class="btn btn-primary" @onclick="OnPreviousPageClickAsync">Previous Page</button>
     <button type="button" class="btn btn-primary" @onclick="OnAddPostClick" >Add Post</button>
-    @message
 }
 
 
 @code {
     private List<Post>? posts;
-    private string message;
+    private int page = 1;
 
     protected override async Task OnInitializedAsync()
     {       
         await base.OnInitializedAsync();
-        posts = await http.GetFromJsonAsync<List<Post>>("api/Posts");
+        posts = await http.GetFromJsonAsync<List<Post>>($"api/Posts/{page}/10");
+    }
+
+    protected async Task OnNextPageClickAsync()
+    {
+        var nextPagePosts = await http.GetFromJsonAsync<List<Post>>($"api/Posts/{page+1}/10");
+
+        //Only update the page if we got something back
+        if (nextPagePosts?.Count() > 0)
+        {
+            posts = nextPagePosts;
+            page++;
+        }
+    }
+
+    protected async Task OnPreviousPageClickAsync()
+    {
+        if(page > 1) //Don't decrement if we are at the start
+        {            
+            posts = await http.GetFromJsonAsync<List<Post>>($"api/Posts/{--page}/10");
+        }
     }
 
     protected void OnAddPostClick()

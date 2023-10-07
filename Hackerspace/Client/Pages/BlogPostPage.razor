@@ -22,21 +22,29 @@
     <InputTextArea class="form-control" id="text" rows="3" aria-describedby="text of blog post" placeholder="Enter text of blog post." @bind-Value="post.Text"></InputTextArea>
     <small id="textHelp" class="form-text text-muted">Please enter the text for your blog post.</small>
 </div>
-<button type="submit" class="btn btn-primary" @onclick="OnSubmitClicked">Submit</button>
-
+<div class="alert alert-primary @HideAlert" role="alert">
+    @AlertContent
+</div>
+<button type="submit" class="btn btn-primary" @onclick="OnSubmitClickedAsync">Submit</button>
 
 
 @code {
     private Post post = new Post();
-
-    protected void OnSubmitClicked()
+    private string HideAlert { get; set; } = "d-none";
+    private string AlertContent { get; set; } = "This is a primary alert—check it out!";
+    protected async Task OnSubmitClickedAsync()
     {
-        http.PostAsJsonAsync<Post>("api/Posts", post);
-        NavManager.NavigateTo("blog");
+        var result = await http.PostAsJsonAsync<Post>("api/Posts/", post);
+        if (result.IsSuccessStatusCode)
+        {
+            NavManager.NavigateTo("blog");    
+            HideAlert = "d-none";
+            AlertContent = "";
+        }
+        else
+        {
+            HideAlert = "";
+            AlertContent = "Could not add post.";
+        }
     }
-}
-<h3>BlogPostPageBlazorComponents</h3>
-
-@code {
-
 }

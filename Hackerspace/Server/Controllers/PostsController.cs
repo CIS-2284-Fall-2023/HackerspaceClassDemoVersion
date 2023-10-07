@@ -1,6 +1,5 @@
-﻿using Hackerspace.Server.Repos;
+﻿using Hackerspace.Server.Interfaces;
 using Hackerspace.Shared.Models;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Hackerspace.Server.Controllers
@@ -9,23 +8,43 @@ namespace Hackerspace.Server.Controllers
     [ApiController]
     public class PostsController : ControllerBase
     {
-        private readonly PostsRepoMock _postsRepo;
+        private readonly IPostsRepo _postsRepo;
 
-        public PostsController(PostsRepoMock postsRepo)
+        public PostsController(IPostsRepo postsRepo)
         {
                 _postsRepo = postsRepo;
         }
 
         [HttpGet]
-        public List<Post> GetAllPosts()
+        [Route("{page:int}/{pageSize:int}")]
+        public IEnumerable<Post> GetPosts(int page, int pageSize)
         {
-            return _postsRepo.GetAll();
+            return _postsRepo.GetPosts(page,pageSize);
+        }
+
+        [HttpGet]
+        [Route("{id:int}")]
+        public Post? GetPost(int id)
+        {
+            return _postsRepo.GetPost(id);
         }
 
         [HttpPost] 
-        public void InsertPost(Post post)
+        public Post Add(Post post)
         {
-            _postsRepo.InsertPost(post);
+            Post updatedPost = _postsRepo.AddPost(post);
+            return updatedPost;
+        }
+
+        [HttpPut]
+        public void Update(Post post)
+        {
+            _postsRepo.UpdatePost(post);
+        }
+
+        [HttpDelete] public void Delete(int id)
+        {
+            _postsRepo.DeletePost(id);
         }
     }
 }
