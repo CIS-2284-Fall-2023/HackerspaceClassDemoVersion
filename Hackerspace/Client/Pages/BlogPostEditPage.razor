@@ -1,4 +1,6 @@
 ﻿@page "/editpost/{id:int}"
+@page "/editpost"
+
 @inject HttpClient http
 @inject NavigationManager NavManager
 
@@ -35,7 +37,6 @@ else
 @code {
     [Parameter]
     public int? Id { get; set; } = null;
-    private string nullText = "...loading";
     private Post? post;
     private string HideAlert { get; set; } = "d-none";
     private string AlertContent { get; set; } = "This is a primary alert—check it out!";
