@@ -10,16 +10,20 @@
 else
 {
     <p>
-
         <button type="button" class="btn btn-primary" @onclick="OnPreviousPageClickAsync"><span class="oi oi-"></span>Previous Page</button>
         <button type="button" class="btn btn-primary" @onclick="OnNextPageClickAsync">Next Page</button>
     </p>
     @foreach(var post in posts)
     {
-        <p>@post.Title</p>
+        <p>
+            @post.Date.ToString("D")
+            <a href="post/@post.Id">@post.Title</a>
+            <button type="button" class="btn btn-primary" @onclick="()=>OnEditClick(post.Id)">Edit Post</button>
+            <button type="button" class="btn btn-danger" @onclick="()=>OnDeleteClickAsync(post.Id)">Delete Post</button>
+        </p>
     }
     <p>
-        <button type="button" class="btn btn-primary" @onclick="OnAddPostClick">Add Post</button>
+        <button type="button" class="btn btn-primary" @onclick="OnAddClick">Add Post</button>
     </p>
 }
 
@@ -54,9 +58,21 @@ else
         }
     }
 
-    protected void OnAddPostClick()
+    protected void OnAddClick()
     {
         //Navigate to a detail page
-        NavManager.NavigateTo("post");
+        NavManager.NavigateTo("editpost");
+    }
+
+
+    protected void OnEditClick(int id)
+    {
+        NavManager.NavigateTo($"editpost/{id}");
+    }
+
+    protected async Task OnDeleteClickAsync(int id)
+    {
+        var result = await http.DeleteAsync($"api/Posts/{id}");
+        StateHasChanged();
     }
 }
