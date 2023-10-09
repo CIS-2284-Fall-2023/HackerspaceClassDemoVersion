@@ -36,7 +36,7 @@ else
     [Parameter]
     public int? Id { get; set; } = null;
     private string nullText = "...loading";
-    private Post post;
+    private Post? post;
     private string HideAlert { get; set; } = "d-none";
     private string AlertContent { get; set; } = "This is a primary alert—check it out!";
 
@@ -62,7 +62,7 @@ else
 
     protected async Task OnSubmitClickedAsync()
     {
-        if (post.Id == 0) //New post
+        if (post?.Id == 0) //New post
         {
             var result = await http.PostAsJsonAsync<Post>("api/Posts/", post);
             if (result.IsSuccessStatusCode)
@@ -77,7 +77,12 @@ else
                 AlertContent = "Could not add post.";
             }
         }
-        else //update existing post
+        else if (post == null)
+        {
+            HideAlert = "";
+            AlertContent = "No post to update.";
+        }
+        else//update existing post
         {
             var result = await http.PutAsJsonAsync<Post>("api/Posts/", post);
         }

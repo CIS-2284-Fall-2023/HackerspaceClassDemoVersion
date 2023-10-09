@@ -11,7 +11,8 @@ namespace Hackerspace.Server.Mocks
     /// </summary>
     public class PostsRepoMock : IPostsRepo
     {
-        private List<Post> posts;
+        private readonly List<Post> posts;
+
         /// <summary>
         /// Mock for PostsRepo
         /// </summary>
@@ -58,7 +59,7 @@ namespace Hackerspace.Server.Mocks
         /// <returns>Post with updagted id field.</returns>
         public Post AddPost(Post post)
         {
-            post.Id = posts.Count(); //Simulate incrementing id
+            post.Id = posts.Count; //Simulate incrementing id
             posts.Add(post);
             return post;//Return post so calling function can get current id
         }

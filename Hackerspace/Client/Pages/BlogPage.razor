@@ -73,6 +73,8 @@ else
     protected async Task OnDeleteClickAsync(int id)
     {
         var result = await http.DeleteAsync($"api/Posts/{id}");
+        //Update the data on the page since it has changed
+        posts = await http.GetFromJsonAsync<List<Post>>($"api/Posts/{page}/10");
         StateHasChanged();
     }
 }
