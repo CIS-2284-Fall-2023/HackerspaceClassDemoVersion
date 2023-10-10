@@ -11,7 +11,10 @@ else
 {
     @foreach(var post in posts)
     {
-        <p>@post.Date.ToString("D") @post.Title</p>
+        <p>
+            @post.Date.ToString("D") 
+            <a href="post/@post.Id">@post.Title</a>
+        </p>
     }
     <button type="button" class="btn btn-primary" @onclick="OnAddPostClick" >Add Post</button>
     @message
