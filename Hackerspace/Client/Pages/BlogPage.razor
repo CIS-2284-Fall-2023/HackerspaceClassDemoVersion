@@ -9,6 +9,10 @@
 }
 else
 {
+    <p>
+        <button type="button" class="btn btn-primary" @onclick="OnPreviousClickAsync">Previous Page</button>
+        <button type="button" class="btn btn-primary" @onclick="OnNextClickAsync">Next Page</button>
+    </p>
     @foreach(var post in posts)
     {
         <p>
@@ -24,16 +28,27 @@ else
 @code {
     private List<Post>? posts;
     private string message;
+    private int page = 1;
 
     protected override async Task OnInitializedAsync()
     {       
         await base.OnInitializedAsync();
-        posts = await http.GetFromJsonAsync<List<Post>>("api/Posts");
+        posts = await http.GetFromJsonAsync<List<Post>>($"api/Posts/{page}/10");
     }
 
     protected void OnAddPostClick()
     {
         //Navigate to a detail page
         NavManager.NavigateTo("post");
+    }
+
+    protected async Task OnPreviousClickAsync()
+    {
+        posts = await http.GetFromJsonAsync<List<Post>>($"api/Posts/{--page}/10");
+    }
+
+    protected async Task OnNextClickAsync()
+    {
+        posts = await http.GetFromJsonAsync<List<Post>>($"api/Posts/{++page}/10");
     }
 }
