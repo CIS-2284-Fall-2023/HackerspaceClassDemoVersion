@@ -1,0 +1,60 @@
+﻿@page "/blog"
+@inject HttpClient Http;
+@inject NavigationManager NavManager;
+
+<h3>Blog</h3>
+@if(posts == null)
+{
+    <p>Loading...</p>
+}
+else
+{
+    <button type="button" class="btn btn-primary" @onclick="OnPreviousPageClickAsync">Previous Page</button>
+    <button type="button" class="btn btn-primary" @onclick="OnNextPageClickAsync">Next Page</button>
+    @foreach(var post in posts)
+    {
+        <p>
+            @post.Date.ToString("D")
+            @post.Title
+        </p>
+    }
+    <p>
+        <button type="button" class="btn btn-primary" @onclick="OnAddClick">Add Post</button>
+    </p>
+}
+
+@code {
+    private List<Post>? posts;
+    private int page = 1;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+        posts = await Http.GetFromJsonAsync<List<Post>>($"api/Posts/{page}/10");
+    }
+
+    protected async Task OnPreviousPageClickAsync()
+    {
+        if (page > 1) //Don't decrement if we are at first page
+        {
+            posts = await Http.GetFromJsonAsync<List<Post>>($"api/Posts/{--page}/10");
+        }
+    }
+
+    protected async Task OnNextPageClickAsync()
+    {
+        var nextPagePosts = await Http.GetFromJsonAsync<List<Post>>($"api/Posts/{page + 1}/10");
+        //Only update if we got something back
+        if(nextPagePosts?.Count>0)
+        {
+            posts = nextPagePosts;
+            page++;
+        }
+    }
+
+    protected void OnAddClick()
+    {
+        NavManager.NavigateTo("editpost");
+    }
+
+}

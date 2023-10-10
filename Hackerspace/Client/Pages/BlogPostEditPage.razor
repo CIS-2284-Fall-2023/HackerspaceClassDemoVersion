@@ -1,0 +1,98 @@
+﻿@page "/editpost/{Id:int}"
+@page "/editpost"
+
+@inject HttpClient Http
+@inject NavigationManager NavManager
+
+<h3>Blog Post</h3>
+@if(post==null)
+{
+    <p>Loading...</p>
+}
+else
+{
+    <div class="form-group">
+        <label for="title">Title</label>
+        <InputText id="title" class="form-control" aria-describedby="title of post" placeholder="Enter title" @bind-Value="post.Title"/>
+        <small id="titleHelp" class="form-text text-muted">Please enter a title for your blog post.</small>
+    </div>
+
+    <div class="form-group">
+        <label for="date">Date</label>
+        <InputDate id="date" class="form-control" aria-describedby="date of post" placeholder="Enter date" @bind-Value="post.Date" />
+        <small id="dateHelp" class="form-text text-muted">Please enter a date for your blog post.</small>
+    </div>
+
+    <div class="form-group">
+        <label for="text">Text</label>
+        <InputTextArea id="text" class="form-control" aria-describedby="text of post" placeholder="Enter text" @bind-Value="post.Text" />
+        <small id="textHelp" class="form-text text-muted">Please enter a text for your blog post.</small>
+    </div>
+    <div class="alert alert-primary @hideAlert" role="alert">
+        @alertContent
+    </div>
+    <button type="button" class="btn btn-primary" @onclick="OnSubmitClickAsync">Submit</button>
+    <button type="button" class="btn btn-secondary" @onclick="OnCancelClick">Cancel</button>
+}
+@code {
+    [Parameter]
+    public int? Id { get; set; } = null;
+    private Post? post;
+    private string hideAlert = "d-none";
+    private string alertContent = "";
+
+    protected override async Task OnParametersSetAsync()
+    {
+        await base.OnParametersSetAsync();
+        if(Id == null)
+        {
+            post = new Post();
+            post.Date = DateTime.Now;
+        }
+        else
+        {
+            post = await Http.GetFromJsonAsync<Post>($"api/Posts/{Id}");
+            //TODO: handle post not found.
+        }
+    }
+
+    protected async Task OnSubmitClickAsync()
+    {
+        if(post?.Id == 0) //New post
+        {
+            var result = await Http.PostAsJsonAsync<Post>("api/Posts/", post);
+            if(result.IsSuccessStatusCode)
+            {
+                NavManager.NavigateTo("blog");
+            }
+            else
+            {
+                hideAlert = "";
+                alertContent = "Could not add post.";
+            }
+        }
+        else if(post == null)
+        {
+            hideAlert = "";
+            alertContent = "No post to update.";
+        }
+        else //update existing post
+        {
+            var result = await Http.PutAsJsonAsync<Post>("api/Posts/", post);
+            if (result.IsSuccessStatusCode)
+            {
+                NavManager.NavigateTo("blog");
+            }
+            else
+            {
+                hideAlert = "";
+                alertContent = "Could not add post.";
+            }
+        }
+    }
+
+    protected void OnCancelClick()
+    {
+        NavManager.NavigateTo("blog");
+    }
+}
