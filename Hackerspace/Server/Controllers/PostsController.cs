@@ -17,16 +17,17 @@ namespace Hackerspace.Server.Controllers
         }
 
         [HttpGet]
-        public List<Post> GetAllPosts()
+        [Route("{page:int}/{pageSize:int}")]
+        public IEnumerable<Post> GetAllPosts(int page, int pageSize)
         {
-            return _postsRepo.GetAll();
+            return _postsRepo.GetPosts(page,pageSize);
         }
 
         [HttpGet]
         [Route("{id:int}")]
         public Post? GetPost(int id)
         {
-            return _postsRepo.Get(id);
+            return _postsRepo.GetPost(id);
         }
 
         [HttpPost] 
