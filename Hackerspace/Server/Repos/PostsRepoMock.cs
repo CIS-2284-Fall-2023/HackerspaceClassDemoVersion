@@ -25,7 +25,7 @@ namespace Hackerspace.Server.Repos
 
         public IEnumerable<Post> GetPosts(int page, int pageSize)
         {
-            return posts.Skip((page-1)*pageSize).Take(pageSize);
+            return posts.OrderByDescending(p=>p.Date).Skip((page-1)*pageSize).Take(pageSize);
         }
 
         public Post? GetPost(int id)
