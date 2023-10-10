@@ -1,0 +1,15 @@
+﻿@page "/post/{Id:int}"
+@inject HttpClient Http
+<h3>BlogPostViewerPage</h3>
+
+@code {
+    [Parameter]
+    public int Id { get; set; }
+    protected Post? post;
+
+    protected async override Task OnParametersSetAsync()
+    {
+        await base.OnParametersSetAsync();
+        post = await Http.GetFromJsonAsync<Post>(;
+    }
+}

@@ -39,6 +39,11 @@ namespace Hackerspace.Server.Repos
             return posts;
         }
 
+        public Post? Get(int id)
+        {
+            return posts.Where(p=>p.Id==id).FirstOrDefault();
+        }
+
         public void InsertPost(Post post)
         {
             posts.Add(post);

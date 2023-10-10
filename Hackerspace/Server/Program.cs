@@ -15,7 +15,7 @@ namespace Hackerspace
             builder.Services.AddRazorPages();
 
             // Inject data objects
-            builder.Services.AddTransient<PostsRepoMock>();
+            builder.Services.AddSingleton<PostsRepoMock>();
 
             var app = builder.Build();
 
