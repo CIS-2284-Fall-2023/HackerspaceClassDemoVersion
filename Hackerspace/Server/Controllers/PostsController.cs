@@ -22,6 +22,13 @@ namespace Hackerspace.Server.Controllers
             return _postsRepo.GetAll();
         }
 
+        [HttpGet]
+        [Route("{id:int}")]
+        public Post? GetPost(int id)
+        {
+            return _postsRepo.Get(id);
+        }
+
         [HttpPost] 
         public void InsertPost(Post post)
         {
