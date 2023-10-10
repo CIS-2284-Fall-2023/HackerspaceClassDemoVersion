@@ -65,5 +65,6 @@ else
     protected async Task OnDeleteClickAsync(int id)
     {
         var result = await http.DeleteAsync($"api/Posts/{id}");
+        NavManager.NavigateTo($"/blog", true); //Force reload of page
     }
 }
