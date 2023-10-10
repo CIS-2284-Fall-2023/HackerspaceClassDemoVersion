@@ -1,4 +1,5 @@
 ﻿using Hackerspace.Shared.Models;
+using System.Collections;
 
 namespace Hackerspace.Server.Repos
 {
@@ -9,37 +10,25 @@ namespace Hackerspace.Server.Repos
         public PostsRepoMock()
         {
             posts = new List<Post>();
-            posts.Add(new Post
+
+            for (int i = 0; i < 105; i++) 
             {
-                Id = 1,
-                Title = "Test 1",
-                Text = "Test 1",
-                Date = DateTime.Now,
-            });
-            
-            posts.Add(new Post
-            {
-                Id = 2,
-                Title = "Test 2",
-                Text = "Test 2",
-                Date = DateTime.Now,
-            }); 
-            
-            posts.Add(new Post
-            {
-                Id = 3,
-                Title = "Test 3",
-                Text = "Test 3",
-                Date = DateTime.Now,
-            });
+                posts.Add(new Post
+                {
+                    Id = i,
+                    Title = $"Test {i}",
+                    Text = $"Test {i}",
+                    Date = DateTime.Now,
+                });
+            }
         }
 
-        public List<Post> GetAll()
+        public IEnumerable<Post> GetPosts(int page, int pageSize)
         {
-            return posts;
+            return posts.Skip((page-1)*pageSize).Take(pageSize);
         }
 
-        public Post? Get(int id)
+        public Post? GetPost(int id)
         {
             return posts.Where(p=>p.Id==id).FirstOrDefault();
         }
