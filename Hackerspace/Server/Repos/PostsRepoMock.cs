@@ -38,5 +38,14 @@ namespace Hackerspace.Server.Repos
             posts.Add(post);
         }
 
+        public void DeletePost(int id)
+        {
+            Post? post_to_remove = posts.Where(p => p.Id == id).FirstOrDefault();
+            if(post_to_remove!=null)
+            {
+                posts.Remove(post_to_remove);
+            }
+        }
+
     }
 }
