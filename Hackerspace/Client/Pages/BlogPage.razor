@@ -44,11 +44,20 @@ else
 
     protected async Task OnPreviousClickAsync()
     {
-        posts = await http.GetFromJsonAsync<List<Post>>($"api/Posts/{--page}/10");
+        if (page > 1)
+        {
+            posts = await http.GetFromJsonAsync<List<Post>>($"api/Posts/{--page}/10");
+        }
     }
 
     protected async Task OnNextClickAsync()
     {
-        posts = await http.GetFromJsonAsync<List<Post>>($"api/Posts/{++page}/10");
+        var nextPagePosts = await http.GetFromJsonAsync<List<Post>>($"api/Posts/{page + 1}/10");
+
+        if(nextPagePosts?.Count > 0)
+        {
+            posts = nextPagePosts;
+            page++;
+        }
     }
 }
