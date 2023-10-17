@@ -1,9 +1,9 @@
-﻿@page "/editpost"
+﻿@page "/editpost/{id:int}"
+@page "/editpost"
 @inject HttpClient http
 @inject NavigationManager NavManager
 
 <h3>Blog Post</h3>
-
 
 <div class="form-group">
     <label for="title">Title</label>
@@ -27,11 +27,46 @@
 
 
 @code {
-    private Post post = new Post();
+    [Parameter]
+    public int? Id { get; set; } = null;
 
-    protected void OnSubmitClicked()
+    private Post? post;
+
+    protected async override Task OnParametersSetAsync()
     {
-        http.PostAsJsonAsync<Post>("api/Posts", post);
+        await base.OnParametersSetAsync();
+        if(Id == null)
+        {
+            post = new Post();
+        }
+        else
+        {
+            post = await http.GetFromJsonAsync<Post>($"api/Posts/{Id}");
+            if(post == null)
+            {
+                //TODO: Alert
+            }
+        }
+    }
+
+    protected async void OnSubmitClicked()
+    {
+        if(post?.Id == 0)//New Post
+        {
+            var result = await http.PostAsJsonAsync<Post>("api/Posts", post);
+            if(result.IsSuccessStatusCode)
+            {
+                NavManager.NavigateTo("blog");
+            }
+        }
+        else if(post==null)
+        {
+            //add alert no post to update
+        }
+        else //update existing post
+        {
+            var result = await http.PutAsJsonAsync<Post>("api/Posts", post);
+        }
         NavManager.NavigateTo("blog");
     }
 }

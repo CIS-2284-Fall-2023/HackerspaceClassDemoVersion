@@ -21,7 +21,7 @@ else
             <button type="button" class="btn btn-danger" @onclick="()=>OnDeleteClickAsync(post.Id)">Delete</button>
         </p>
     }
-    <button type="button" class="btn btn-primary" @onclick="OnAddPostClick" >Add Post</button>
+    <button type="button" class="btn btn-primary" @onclick="OnAddPostClick">Add Post</button>
     @message
 }
 
@@ -40,7 +40,7 @@ else
     protected void OnAddPostClick()
     {
         //Navigate to a detail page
-        NavManager.NavigateTo("post");
+        NavManager.NavigateTo("editpost");
     }
 
     protected async Task OnPreviousClickAsync()
