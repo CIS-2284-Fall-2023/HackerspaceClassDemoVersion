@@ -5,25 +5,31 @@
 
 <h3>Blog Post</h3>
 
-<div class="form-group">
-    <label for="title">Title</label>
+@if(post == null)
+{
+    <p>Loading...</p>
+}
+else
+{
+    <div class="form-group">
+        <label for="title">Title</label>
 
-    <InputText id="title" class="form-control" aria-describedby="title of blog post" placeholder="Enter title" @bind-Value="post.Title" />
-    <small id="titleHelp" class="form-text text-muted">Please enter a title for your blog post.</small>
-</div>
+        <InputText id="title" class="form-control" aria-describedby="title of blog post" placeholder="Enter title" @bind-Value="post.Title" />
+        <small id="titleHelp" class="form-text text-muted">Please enter a title for your blog post.</small>
+    </div>
 
-<div class="form-group">
-    <label for="date">Date</label>
-    <InputDate @bind-Value="post.Date" class="form-control" aria-describedby="date of blog post" placeholder="Enter date" />
-    <small id="titleHelp" class="form-text text-muted">Please enter a date for your blog post.</small>
-</div>
-<div class="form-group">
-    <label for="text">Text</label>
-    <InputTextArea class="form-control" id="text" rows="3" aria-describedby="text of blog post" placeholder="Enter text of blog post." @bind-Value="post.Text"></InputTextArea>
-    <small id="textHelp" class="form-text text-muted">Please enter the text for your blog post.</small>
-</div>
-<button type="submit" class="btn btn-primary" @onclick="OnSubmitClicked">Submit</button>
-
+    <div class="form-group">
+        <label for="date">Date</label>
+        <InputDate @bind-Value="post.Date" class="form-control" aria-describedby="date of blog post" placeholder="Enter date" />
+        <small id="titleHelp" class="form-text text-muted">Please enter a date for your blog post.</small>
+    </div>
+    <div class="form-group">
+        <label for="text">Text</label>
+        <InputTextArea class="form-control" id="text" rows="3" aria-describedby="text of blog post" placeholder="Enter text of blog post." @bind-Value="post.Text"></InputTextArea>
+        <small id="textHelp" class="form-text text-muted">Please enter the text for your blog post.</small>
+    </div>
+    <button type="submit" class="btn btn-primary" @onclick="OnSubmitClicked">Submit</button>
+}
 
 
 @code {
