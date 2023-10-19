@@ -2,9 +2,9 @@
 using Hackerspace.Shared.Models;
 using System.Collections;
 
-namespace Hackerspace.Server.Repos
+namespace Hackerspace.Server.Mocks
 {
-    public class PostsRepoMock:IPostsRepo
+    public class PostsRepoMock : IPostsRepo
     {
         private List<Post> posts;
 
@@ -12,7 +12,7 @@ namespace Hackerspace.Server.Repos
         {
             posts = new List<Post>();
 
-            for (int i = 1; i < 105; i++) 
+            for (int i = 1; i < 105; i++)
             {
                 posts.Add(new Post
                 {
@@ -26,12 +26,12 @@ namespace Hackerspace.Server.Repos
 
         public IEnumerable<Post> GetPosts(int page, int pageSize)
         {
-            return posts.OrderByDescending(p=>p.Date).Skip((page-1)*pageSize).Take(pageSize);
+            return posts.OrderByDescending(p => p.Date).Skip((page - 1) * pageSize).Take(pageSize);
         }
 
         public Post? GetPost(int id)
         {
-            return posts.Where(p=>p.Id==id).FirstOrDefault();
+            return posts.Where(p => p.Id == id).FirstOrDefault();
         }
 
 
@@ -45,10 +45,10 @@ namespace Hackerspace.Server.Repos
         public void UpdatePost(Post post)
         {
             //find current post
-            Post? currentPost = posts.Find(p=> p.Id == post.Id);
+            Post? currentPost = posts.Find(p => p.Id == post.Id);
 
             //if found update each element
-            if(currentPost!=null) 
+            if (currentPost != null)
             {
                 currentPost.Title = post.Title;
                 currentPost.Text = post.Text;

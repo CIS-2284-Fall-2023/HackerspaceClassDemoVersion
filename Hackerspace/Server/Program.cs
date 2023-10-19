@@ -1,6 +1,8 @@
+using Hackerspace.Server.Data;
 using Hackerspace.Server.Interfaces;
-using Hackerspace.Server.Repos;
+using Hackerspace.Server.Mocks;
 using Microsoft.AspNetCore.ResponseCompression;
+using Microsoft.EntityFrameworkCore;
 
 namespace Hackerspace
 {
@@ -16,6 +18,7 @@ namespace Hackerspace
             builder.Services.AddRazorPages();
 
             // Inject data objects
+            builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlite("HackerspaceDB.db"));
             builder.Services.AddSingleton<IPostsRepo ,PostsRepoMock>();
 
             var app = builder.Build();

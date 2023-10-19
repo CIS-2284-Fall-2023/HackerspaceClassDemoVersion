@@ -1,5 +1,4 @@
 ﻿using Hackerspace.Server.Interfaces;
-using Hackerspace.Server.Repos;
 using Hackerspace.Shared.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
