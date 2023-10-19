@@ -19,7 +19,11 @@ namespace Hackerspace
             builder.Services.AddRazorPages();
 
             // Inject data objects
-            builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlite("HackerspaceDB.db"));
+            //var folder = Environment.SpecialFolder.LocalApplicationData;
+            //var path = Environment.GetFolderPath(folder);
+            //DbPath = System.IO.Path.Join(path, connectionString);
+            builder.Services.AddSqlite<ApplicationDbContext>("HackerspaceDB.db");
+            //builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlite("HackerspaceDB.db"));
             builder.Services.AddSingleton<IPostsRepo ,PostsRepo>();
 
             var app = builder.Build();

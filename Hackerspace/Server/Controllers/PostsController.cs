@@ -1,6 +1,5 @@
 ﻿using Hackerspace.Server.Interfaces;
 using Hackerspace.Shared.Models;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Hackerspace.Server.Controllers

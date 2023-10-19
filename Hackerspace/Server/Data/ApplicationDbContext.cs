@@ -9,11 +9,9 @@ namespace Hackerspace.Server.Data
 
         public string DbPath { get; }
 
-        public ApplicationDbContext(string connectionString)
+        public ApplicationDbContext(DbContextOptions options):base(options)
         {
-            var folder = Environment.SpecialFolder.LocalApplicationData;
-            var path = Environment.GetFolderPath(folder);
-            DbPath = System.IO.Path.Join(path, connectionString);
+
         }
 
         // The following configures EF to create a Sqlite database file in the
