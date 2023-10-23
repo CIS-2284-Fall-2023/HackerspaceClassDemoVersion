@@ -15,16 +15,15 @@ namespace Hackerspace
 
             // Add services to the container.
 
-            builder.Services.AddControllersWithViews();
-            builder.Services.AddRazorPages();
-
             // Inject data objects
             //var folder = Environment.SpecialFolder.LocalApplicationData;
             //var path = Environment.GetFolderPath(folder);
             //DbPath = System.IO.Path.Join(path, connectionString);
-            builder.Services.AddSqlite<ApplicationDbContext>("HackerspaceDB.db");
-            //builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlite("HackerspaceDB.db"));
-            builder.Services.AddSingleton<IPostsRepo ,PostsRepo>();
+            builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlite("Data Source = Hackerspace.db"));
+            builder.Services.AddTransient<IPostsRepo ,PostsRepo>();
+
+            builder.Services.AddControllersWithViews();
+            builder.Services.AddRazorPages();
 
             var app = builder.Build();
 
