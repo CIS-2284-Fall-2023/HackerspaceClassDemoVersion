@@ -7,45 +7,44 @@ namespace Hackerspace.Server.Controllers
     [Route("api/[controller]")]
     public class PostsController:ControllerBase
     {
-        private readonly IPostsRepo _postRepo;
+        private readonly IPostsRepo _postsRepo;
 
         public PostsController(IPostsRepo postsRepo)
         {
-            _postRepo = postsRepo;     
+                _postsRepo = postsRepo;
         }
 
         [HttpGet]
         [Route("{page:int}/{pageSize:int}")]
-        public IEnumerable<Post> GetPosts(int page, int pageSize)
+        public IEnumerable<Post> GetAllPosts(int page, int pageSize)
         {
-            return _postRepo.GetPosts(page, pageSize);
+            return _postsRepo.GetPosts(page,pageSize);
         }
 
         [HttpGet]
         [Route("{id:int}")]
         public Post? GetPost(int id)
         {
-            return _postRepo.GetPost(id);
+            return _postsRepo.GetPost(id);
         }
 
-        [HttpPost]
-        public Post Add(Post post)
+        [HttpPost] 
+        public void PostPost(Post post)
         {
-            Post updatedPost = _postRepo.AddPost(post);
-            return updatedPost;
+            _postsRepo.AddPost(post);
         }
 
         [HttpPut]
-        public void Update(Post post)
+        public void PutPost(Post post) 
         {
-            _postRepo.UpdatePost(post);
+            _postsRepo.UpdatePost(post);
         }
 
         [HttpDelete]
         [Route("{id:int}")]
-        public void Delete(int id)
+        public void DeletePost(int id)
         {
-            _postRepo.DeletePost(id);
+            _postsRepo.DeletePost(id);
         }
     }
 }
