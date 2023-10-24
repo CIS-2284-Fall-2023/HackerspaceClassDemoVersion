@@ -48,13 +48,13 @@ else
     {
         if (page > 1)
         {
-            posts = await http.GetFromJsonAsync<List<Post>>($"api/Posts/{--page}/10");
+            posts = await Http.GetFromJsonAsync<List<Post>>($"api/Posts/{--page}/10");
         }
     }
 
     protected async Task OnNextClickAsync()
     {
-        var nextPagePosts = await http.GetFromJsonAsync<List<Post>>($"api/Posts/{page + 1}/10");
+        var nextPagePosts = await Http.GetFromJsonAsync<List<Post>>($"api/Posts/{page + 1}/10");
 
         if(nextPagePosts?.Count > 0)
         {
@@ -71,7 +71,7 @@ else
 
     protected async Task OnDeleteClickAsync(int id)
     {
-        var result = await http.DeleteAsync($"api/Posts/{id}");
+        var result = await Http.DeleteAsync($"api/Posts/{id}");
         NavManager.NavigateTo($"/blog", true); //Force reload of page
     }
 }
