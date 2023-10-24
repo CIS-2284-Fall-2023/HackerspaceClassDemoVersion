@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace Hackerspace.Server.Controllers
 {
     [Route("api/[controller]")]
+    [ApiController]
     public class PostsController:ControllerBase
     {
         private readonly IPostsRepo _postsRepo;
