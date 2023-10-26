@@ -1,39 +1,17 @@
 ﻿@page "/speedfeedcalc"
 
 <h3>SpeedAndFeedCalcPage</h3>
-<p>
-    <label for="chipload">Chip Load</label>
-    <InputNumber @bind-Value="calculator.ChipLoad" />
-</p>
-<p>
-    <label for="rpm">RPM</label>
-    <InputNumber @bind-Value="calculator.RPM" />
 
-</p>
-<p>
-    <label for="flutes">Flutes</label>
-    <InputNumber @bind-Value="calculator.Flutes" />
-</p>
-<p>
-    <button @onclick="OnClick">Submit</button>
-</p>
-<p>
-    @result
-</p>
+<SpeedFeedCalcComponent OnSpeedFeedCalculated="UpdateResult" />
+<p>@resultInParent</p>
+
 
 @code {
-    private SpeedFeedCalc calculator;
-    private string result;
+    string resultInParent = "Nothing hapened yet";
 
-    protected override void OnInitialized()
+    private async Task UpdateResult(string result)
     {
-        base.OnInitialized();
-        calculator = new SpeedFeedCalc();
+        await Task.Delay(10000);
+        resultInParent = $"Button clicked in child component! Child calculated: {result}.";
     }
-
-    private void OnClick()
-    {
-        result = calculator.FeedRate.ToString();
-    }
-
 }

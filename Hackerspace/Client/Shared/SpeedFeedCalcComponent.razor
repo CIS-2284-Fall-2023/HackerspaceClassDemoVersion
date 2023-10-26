@@ -1,0 +1,41 @@
+﻿<p>
+    <label for="chipload">Chip Load</label>
+    <InputNumber @bind-Value="calculator.ChipLoad" />
+</p>
+<p>
+    <label for="rpm">RPM</label>
+    <InputNumber @bind-Value="calculator.RPM" />
+
+</p>
+<p>
+    <label for="flutes">Flutes</label>
+    <InputNumber @bind-Value="calculator.Flutes" />
+</p>
+<p>
+    <button @onclick="OnClick">Submit</button>
+</p>
+<p>
+    @Result
+</p>
+
+@code {
+    private SpeedFeedCalc calculator;
+
+    [Parameter]
+    public EventCallback<string> OnSpeedFeedCalculated { get; set; }
+
+    public string Result { get; set; } = "";
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+        calculator = new SpeedFeedCalc();
+    }
+
+    private async Task OnClick()
+    {
+        Result = calculator.FeedRate.ToString();
+        await OnSpeedFeedCalculated.InvokeAsync(Result);
+    }
+
+}
