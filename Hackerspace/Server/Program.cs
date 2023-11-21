@@ -1,4 +1,5 @@
 using Hackerspace.Server.Data;
+using Hackerspace.Server.Hubs;
 using Hackerspace.Server.Interfaces;
 using Hackerspace.Server.Mocks;
 using Hackerspace.Server.Repos;
@@ -28,8 +29,17 @@ namespace Hackerspace
             // Inject data objects
             builder.Services.AddTransient<IPostsRepo, PostsRepo>();
 
+            //Add SignalR
+            builder.Services.AddSignalR();
+            builder.Services.AddResponseCompression(opts =>
+            {
+                opts.MimeTypes = ResponseCompressionDefaults.MimeTypes.Concat(new[] {"application/octet-stream"});
+            });
 
             var app = builder.Build();
+
+            //For SignalR
+            app.UseResponseCompression();
 
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
@@ -53,6 +63,10 @@ namespace Hackerspace
 
             app.MapRazorPages();
             app.MapControllers();
+
+            //For SignalR
+            app.MapHub<ChatHub>("/chathub");
+
             app.MapFallbackToFile("index.html");
 
             app.Run();
